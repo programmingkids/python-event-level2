@@ -29,8 +29,7 @@ class Game():
 
         self.root = Tk()
         self.root.title("パズルゲーム")
-        #self.kuroojyo = PhotoImage(file="kuroojyo.png")
-        self.kuroojyo = PhotoImage(file="ball01.png")
+        self.kuroojyo = PhotoImage(file="kuroojyo.png")
         self.mushi = PhotoImage(file="mushi.png")
         self.syogun = PhotoImage(file="syogun.png")
         self.murasaki = PhotoImage(file="murasaki.png")
