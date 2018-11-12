@@ -184,6 +184,7 @@ class Shape:
         self.shape = choice(Shape.SHAPES)  # a random shape
         self.color = self.shape[0]
         self.canvas = canvas
+        print(self.shape[0])
 
         if self.shape[0] is "kuroojyo":
             self.image = kuroojyo
@@ -199,7 +200,6 @@ class Shape:
             self.image = ryu
         elif self.shape[0] is "akanin":
             self.image = akanin
-
         for point in self.shape[1:]:
             # # x, y width , height
             # box = canvas.create_rectangle(
@@ -217,7 +217,7 @@ class Shape:
             # x, y
             box = canvas.create_image(point[0] * Shape.BOX_SIZE + Shape.START_POINT + Shape.BOX_SIZE/2,
                                       point[1] * Shape.BOX_SIZE + Shape.BOX_SIZE/2,
-                                      image=self.image)
+                                      image = self.image)
             self.boxes.append(box)
 
     def move(self, x, y):
