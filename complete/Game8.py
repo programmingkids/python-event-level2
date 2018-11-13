@@ -52,13 +52,13 @@ class Game():
         self.root.title("パズルゲーム")
 
         # パズル画像のオブジェクトを作る
-        self.kuroojyo = PhotoImage(file="kuroojyo.png")
-        self.mushi = PhotoImage(file="mushi.png")
-        self.syogun = PhotoImage(file="syogun.png")
-        self.murasaki = PhotoImage(file="murasaki.png")
-        self.tonakai = PhotoImage(file="tonakai.png")
-        self.ryu = PhotoImage(file="ryu.png")
-        self.akanin = PhotoImage(file="akanin.png")
+        self.kuroojyo = PhotoImage(file="./images/kuroojyo.png")
+        self.mushi = PhotoImage(file="./images/mushi.png")
+        self.syogun = PhotoImage(file="./images/syogun.png")
+        self.murasaki = PhotoImage(file="./images/murasaki.png")
+        self.tonakai = PhotoImage(file="./images/tonakai.png")
+        self.ryu = PhotoImage(file="./images/ryu.png")
+        self.akanin = PhotoImage(file="./images/akanin.png")
         # 落ちてくるブロックと次に落ちてくるブロックを作る
         self.first_shape = choice(self.SHAPES)
         self.second_shape = choice(self.SHAPES)
@@ -306,6 +306,7 @@ class Shape:
         for box in self.boxes:
             if not self.can_move_box(box, x, y): return False
         return True
+
 
 if __name__ == "__main__":
     game = Game()
