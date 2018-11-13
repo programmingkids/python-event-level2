@@ -7,7 +7,7 @@ from collections import Counter
 
 WINDOW_WIDTH = 300
 WINDOW_HEIGHT = 500
-
+BOX_SIZE = 20
 
 
 class Game():
@@ -116,7 +116,7 @@ class Game():
         counter = Counter()
         for box in boxes_to_check.values(): counter[box] += 1
         complete_lines = [k for k, v in counter.items()
-                          if v == (WINDOW_WIDTH / Shape.BOX_SIZE) - 1]
+                          if v == (WINDOW_WIDTH / BOX_SIZE) - 1]
 
         if not complete_lines: return False
 
@@ -129,7 +129,7 @@ class Game():
         for (box, coords) in all_boxes_coords.items():
             for line in complete_lines:
                 if coords < line:
-                    self.canvas.move(box, 0, Shape.BOX_SIZE)
+                    self.canvas.move(box, 0, BOX_SIZE)
         return len(complete_lines)
 
     def game_over(self):
@@ -141,9 +141,11 @@ class Game():
 
 # ブロックの形を表すクラス
 class Shape:
-    BOX_SIZE = 20
-    START_POINT = WINDOW_WIDTH / 2 / BOX_SIZE * BOX_SIZE - BOX_SIZE
-    #START_POINT = WINDOW_WIDTH / 2 - BOX_SIZE
+    #START_POINT = WINDOW_WIDTH / 2 / BOX_SIZE * BOX_SIZE - BOX_SIZE
+    # Shapeが最初に登場する時のX座標
+    START_POINT = WINDOW_WIDTH / 2 - BOX_SIZE
+
+    # ブロックの形
     SHAPES = (
         ("yellow", (0, 0), (1, 0), (0, 1), (1, 1)),  # square
         ("lightblue", (0, 0), (1, 0), (2, 0), (3, 0)),  # line
@@ -155,14 +157,6 @@ class Shape:
     )
 
     def __init__(self, canvas):
-        '''Create a shape.
-        Select a random shape from the SHAPES tuple. Then, for each point
-        in the shape definition given in the SHAPES tuple, create a
-        rectangle of size BOX_SIZE. Save the integer references to these
-        rectangles in the self.boxes list.
-        Args:
-        canvas - the parent canvas on which the shape appears
-        '''
         self.boxes = []  # the squares drawn by canvas.create_rectangle()
         self.shape = choice(Shape.SHAPES)  # a random shape
         self.color = self.shape[0]
@@ -170,10 +164,10 @@ class Shape:
 
         for point in self.shape[1:]:
             box = canvas.create_rectangle(
-                point[0] * Shape.BOX_SIZE + Shape.START_POINT,
-                point[1] * Shape.BOX_SIZE,
-                point[0] * Shape.BOX_SIZE + Shape.BOX_SIZE + Shape.START_POINT,
-                point[1] * Shape.BOX_SIZE + Shape.BOX_SIZE,
+                point[0] * BOX_SIZE + Shape.START_POINT,
+                point[1] * BOX_SIZE,
+                point[0] * BOX_SIZE + BOX_SIZE + Shape.START_POINT,
+                point[1] * BOX_SIZE + BOX_SIZE,
                 fill=self.color)
             self.boxes.append(box)
 
@@ -183,7 +177,7 @@ class Shape:
             return False
         else:
             for box in self.boxes:
-                self.canvas.move(box, x * Shape.BOX_SIZE, y * Shape.BOX_SIZE)
+                self.canvas.move(box, x * BOX_SIZE, y * BOX_SIZE)
             return True
 
     def fall(self):
@@ -192,7 +186,7 @@ class Shape:
             return False
         else:
             for box in self.boxes:
-                self.canvas.move(box, 0 * Shape.BOX_SIZE, 1 * Shape.BOX_SIZE)
+                self.canvas.move(box, 0 * BOX_SIZE, 1 * BOX_SIZE)
             return True
 
     def rotate(self):
@@ -206,8 +200,8 @@ class Shape:
             pivot_coords = self.canvas.coords(pivot)
             x_diff = box_coords[0] - pivot_coords[0]
             y_diff = box_coords[1] - pivot_coords[1]
-            x_move = (- x_diff - y_diff) / self.BOX_SIZE
-            y_move = (x_diff - y_diff) / self.BOX_SIZE
+            x_move = (- x_diff - y_diff) / BOX_SIZE
+            y_move = (x_diff - y_diff) / BOX_SIZE
             return x_move, y_move
 
         # Check if shape can legally move
@@ -220,15 +214,15 @@ class Shape:
         for box in boxes:
             x_move, y_move = get_move_coords(box)
             self.canvas.move(box,
-                             x_move * self.BOX_SIZE,
-                             y_move * self.BOX_SIZE)
+                             x_move * BOX_SIZE,
+                             y_move * BOX_SIZE)
 
         return True
 
     def can_move_box(self, box, x, y):
         '''Check if box can move (x, y) boxes.'''
-        x = x * Shape.BOX_SIZE
-        y = y * Shape.BOX_SIZE
+        x = x * BOX_SIZE
+        y = y * BOX_SIZE
         coords = self.canvas.coords(box)
 
         # Returns False if moving the box would overrun the screen
