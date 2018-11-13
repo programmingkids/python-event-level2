@@ -38,7 +38,7 @@ class Game():
         self.status_var.set("Level: 1, Score: 0")
         self.status = Label(self.root,
                             textvariable=self.status_var,
-                            font=("Helvetica", 10, "bold"))
+                            font=("System", 10))
         self.status.pack()
 
         self.canvas = Canvas(
@@ -265,6 +265,5 @@ class Shape:
         return True
 
 
-if __name__ == "__main__":
-    game = Game()
-    game.start()
+game = Game()
+game.start()
