@@ -52,13 +52,13 @@ class Game():
         self.root.title("パズルゲーム")
 
         # パズル画像のオブジェクトを作る
-        self.kuroojyo = PhotoImage(file="./images/kuroojyo.png")
-        self.mushi = PhotoImage(file="./images/mushi.png")
-        self.syogun = PhotoImage(file="./images/syogun.png")
-        self.murasaki = PhotoImage(file="./images/murasaki.png")
-        self.tonakai = PhotoImage(file="./images/tonakai.png")
-        self.ryu = PhotoImage(file="./images/ryu.png")
-        self.akanin = PhotoImage(file="./images/akanin.png")
+        self.kuroojyo = PhotoImage(file="./../images/kuroojyo.png")
+        self.mushi = PhotoImage(file="./../images/mushi.png")
+        self.syogun = PhotoImage(file="./../images/syogun.png")
+        self.murasaki = PhotoImage(file="./../images/murasaki.png")
+        self.tonakai = PhotoImage(file="./../images/tonakai.png")
+        self.ryu = PhotoImage(file="./../images/ryu.png")
+        self.akanin = PhotoImage(file="./../images/akanin.png")
         # 落ちてくるブロックと次に落ちてくるブロックを作る
         self.first_shape = choice(self.SHAPES)
         self.second_shape = choice(self.SHAPES)
