@@ -5,28 +5,26 @@ from tkinter import messagebox
 from random import choice
 from collections import Counter
 
-import pprint
-
-
 # これは固定にしておく
 BOX_SIZE = 20
-# BOX_SIZEの倍数であること
+# BOX_SIZEの倍数にします
 WINDOW_WIDTH = 280
+# 高さは自由に設定していいです
 WINDOW_HEIGHT = 500
 
 # ブロックの形
 BLOCKS = (
-    ("yellow", (0, 0), (1, 0), (0, 1), (1, 1)),  # square
-    ("lightblue", (0, 0), (1, 0), (2, 0), (3, 0)),  # line
-    ("orange", (2, 0), (0, 1), (1, 1), (2, 1)),  # right el
-    ("blue", (0, 0), (0, 1), (1, 1), (2, 1)),  # left el
-    ("green", (0, 1), (1, 1), (1, 0), (2, 0)),  # right wedge
-    ("red", (0, 0), (1, 0), (1, 1), (2, 1)),  # left wedge
-    ("purple", (1, 0), (0, 1), (1, 1), (2, 1)),  # symmetrical wedge
+    ("yellow", (0, 0), (1, 0), (0, 1), (1, 1)),  # 四角
+    ("lightblue", (0, 0), (1, 0), (2, 0), (3, 0)),  # 直線
+    ("orange", (2, 0), (0, 1), (1, 1), (2, 1)),  # 右L字
+    ("blue", (0, 0), (0, 1), (1, 1), (2, 1)),  # 左L字
+    ("green", (0, 1), (1, 1), (1, 0), (2, 0)),  # 右カギ形
+    ("red", (0, 0), (1, 0), (1, 1), (2, 1)),  # 左カギ形
+    ("purple", (1, 0), (0, 1), (1, 1), (2, 1)),  # 土形
 )
 
 
-class Game():
+class Game:
     def __init__(self):
         # レベル
         self.level = 1
@@ -52,9 +50,9 @@ class Game():
         self.canvas = Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
         self.canvas.pack()
         # キー操作に対応するイベントを登録します
-        self.root.bind("<Key>", self.handle_events)
+        self.root.bind("<Key>", self.event_handler)
 
-    def handle_events(self, event):
+    def event_handler(self, event):
         if event.keysym == "Left":
             self.current_block.move(-1, 0)
         if event.keysym == "Right":
@@ -261,13 +259,14 @@ class Block:
             # 移動成功なので、Trueを返します
             return True
 
+    # ブロックを時計回りに回転します。今回は逆回転はしない
     def rotate(self):
-        '''Rotates the shape clockwise.'''
         boxes = self.boxes[:]
+        # 回転の軸になるボックスを指定します。ピボットと呼びます
         pivot = boxes.pop(2)
 
         def get_move_coords(box):
-            '''Return (x, y) boxes needed to rotate a box around the pivot.'''
+            # ピボットのボックスを軸として、回転するべき座標を計算します
             box_coords = self.canvas.coords(box)
             pivot_coords = self.canvas.coords(pivot)
             x_diff = box_coords[0] - pivot_coords[0]
@@ -276,13 +275,14 @@ class Block:
             y_move = (x_diff - y_diff) / BOX_SIZE
             return x_move, y_move
 
-        # Check if shape can legally move
+        # ボックスが移動可能かを判定します
         for box in boxes:
             x_move, y_move = get_move_coords(box)
             if not self.can_move_box(box, x_move, y_move):
+                # 移動不可なので、回転しません
                 return False
 
-        # Move shape
+        # それぞれのボックスを移動させて、回転します
         for box in boxes:
             x_move, y_move = get_move_coords(box)
             self.canvas.move(box, x_move * BOX_SIZE, y_move * BOX_SIZE)
