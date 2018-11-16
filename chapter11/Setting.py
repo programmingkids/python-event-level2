@@ -1,5 +1,3 @@
-from tkinter import PhotoImage
-
 # ボックスのサイズ。これは固定値で20
 BOX_SIZE = 40
 # BOX_SIZEの倍数にします

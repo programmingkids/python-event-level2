@@ -1,36 +1,42 @@
-import tkinter
+from tkinter import *
 
-# tkinterを初期化する
-root = tkinter.Tk()
+# 画面の横幅
+WINDOW_WIDTH = 280
+# 画面の高さ
+WINDOW_HEIGHT = 500
+# ブロックのサイズ
+BOX_SIZE = 20
+# 落下速度
+SPEED = 200
 
-# タイトルを設定する
-root.title("サンプル10")
-# ウィンドウのサイズの設定
-root.geometry("896x640")
-# ウィンドウの最小サイズの設定（このサイズより小さくなりません）
-root.minsize(896, 640)
-# ウィンドウの最大サイズの設定（このサイズより大きくなりません）
-root.maxsize(896, 640)
 
-# キャンバスを作成 背景色は「白」、幅と高さはウィンドウと同じサイズにする
-canvas = tkinter.Canvas(bg="white",width=896, height=640)
-# キャンバスをウィンドウに配置
-canvas.place(x=0, y=0)
+def move():
+    # blockはリストです。リスト内のボックスを1個ずつ取り出し、Y方向に移動させます
+    for box in block:
+        # 第1引数は移動対象ボックス、
+        # 第2引数はX方向の移動量、今回は実質0
+        # 第3引数はY方向の移動量、今回はBOX_SIZEだけ移動
+        canvas.move(box, 0 * BOX_SIZE, 1 * BOX_SIZE)
+    root.after(SPEED, move)
 
-# 画像ファイルを読み込み、リストに代入します
-images = [
-    tkinter.PhotoImage(file="../images/robot.png"),
-    tkinter.PhotoImage(file="../images/robot2.png"),
-    tkinter.PhotoImage(file="../images/robot3.png"),
-    tkinter.PhotoImage(file="../images/robot4.png"),
-    tkinter.PhotoImage(file="../images/robot5.png"),
-    tkinter.PhotoImage(file="../images/robot6.png"),
-    tkinter.PhotoImage(file="../images/robot7.png"),
-]
 
-# リスト内の画像をキャンバスに表示します
-for i in range(len(images)):
-    canvas.create_image(32 + i * 64, 32, image=images[i])
+# Tkinter
+root = Tk()
+root.title("Puzzle")
 
-# 画面を表示します
+canvas = Canvas(root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
+canvas.pack()
+
+box_a = canvas.create_rectangle(BOX_SIZE*6,BOX_SIZE*0,BOX_SIZE*7,BOX_SIZE*1, fill="green")
+box_b = canvas.create_rectangle(BOX_SIZE*6,BOX_SIZE*1,BOX_SIZE*7,BOX_SIZE*2, fill="green")
+box_c = canvas.create_rectangle(BOX_SIZE*6,BOX_SIZE*2,BOX_SIZE*7,BOX_SIZE*3, fill="green")
+box_d = canvas.create_rectangle(BOX_SIZE*7,BOX_SIZE*0,BOX_SIZE*8,BOX_SIZE*1, fill="green")
+
+# ボックスをまとめたリストを作ります
+block = [box_a, box_b, box_c, box_d]
+
+# 200ミリ秒おきに「move」を実行します
+root.after(SPEED, move)
+# メインの画面を表示します
 root.mainloop()
+

@@ -1,4 +1,4 @@
-from chapter12.Game import *
+from chapter11.Game import *
 
 # Gameクラスの初期化
 game = Game()

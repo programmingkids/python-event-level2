@@ -1,5 +1,5 @@
 from random import choice
-from chapter12.Setting import *
+from chapter11.Setting import *
 
 
 # ブロックの形を表すクラス

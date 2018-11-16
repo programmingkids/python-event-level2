@@ -1,7 +1,7 @@
-def sayThankYou():
+def say_thank_you():
     print("Thank you")
 
 
-sayThankYou()
-sayThankYou()
-sayThankYou()
+say_thank_you()
+say_thank_you()
+say_thank_you()
