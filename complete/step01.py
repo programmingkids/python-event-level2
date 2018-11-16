@@ -1,4 +1,3 @@
-import math
 import tkinter
 from tkinter import Canvas, Label, Tk, StringVar
 from tkinter import messagebox
@@ -8,7 +7,7 @@ from collections import Counter
 # これは固定にしておく
 BOX_SIZE = 20
 # BOX_SIZEの倍数にします
-WINDOW_WIDTH = 280
+WINDOW_WIDTH = 300
 # 高さは自由に設定していいです
 WINDOW_HEIGHT = 500
 
@@ -206,7 +205,7 @@ class Game:
 class Block:
     # コンストラクタでブロックを作成
     def __init__(self, canvas):
-        self.start_point_x = (math.floor(WINDOW_WIDTH / BOX_SIZE / 2 ) - 1) * BOX_SIZE
+        self.start_point_x = ((WINDOW_WIDTH / BOX_SIZE) // 2 - 1) * BOX_SIZE
 
         # キャンバスに描かれるボックスをリストで保存します
         self.boxes = []
