@@ -1,8 +1,8 @@
 from tkinter import Canvas, Label, Tk, StringVar, ALL
 from tkinter import messagebox
 from collections import Counter
-from step1.Block import Block
-from step1.Setting import *
+from chapter09.Block import Block
+from chapter09.Setting import *
 
 
 class Game:
