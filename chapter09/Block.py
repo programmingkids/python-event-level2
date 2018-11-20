@@ -90,7 +90,7 @@ class Block:
 
     # 現在のブロック内のボックスを動かすことができるかを判定します
     def can_move_box(self, box, x, y):
-        # xとyは移動させる数なので、BOX_SIZEをかけて、移動量にする
+        # xとyは移動させる座標なので、BOX_SIZEをかけて、移動量にする
         x = x * BOX_SIZE
         y = y * BOX_SIZE
 
