@@ -1,8 +1,8 @@
-num1 = 1
-print(num1) # 1
+num1 = 5
+num2 = 2
 
-num1 = num1 + 1
-print(num1) # 2
-
-num1 += 1
-print(num1) # 3
+print(num1 + num2) # 7
+print(num1 - num2) # 3
+print(num1 * num2) # 10
+print(num1 / num2) # 2.5
+print(num1 % num2) # 1

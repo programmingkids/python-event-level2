@@ -1,8 +1,4 @@
-num1 = 5
+num1 = 3
 num2 = 2
 
-print(num1 + num2) # 7
-print(num1 - num2) # 3
-print(num1 * num2) # 10
-print(num1 / num2) # 2.5
-print(num1 % num2) # 1
+print("3 + 2 = " + num1 + num2)
