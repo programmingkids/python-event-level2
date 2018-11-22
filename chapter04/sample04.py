@@ -15,7 +15,7 @@ canvas = Canvas(root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
 canvas.pack()
 
 canvas.create_rectangle(0,0,BOX_SIZE,BOX_SIZE, fill="red")
-canvas.create_rectangle(BOX_SIZE,0,BOX_SIZE*2,BOX_SIZE, fill="red")
+canvas.create_rectangle(BOX_SIZE,0,BOX_SIZE*2,BOX_SIZE, fill="blue")
 canvas.create_rectangle(BOX_SIZE,BOX_SIZE,BOX_SIZE*2,BOX_SIZE*2, fill="green")
 
 root.mainloop()
