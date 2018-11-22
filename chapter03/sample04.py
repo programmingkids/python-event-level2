@@ -1,8 +1,7 @@
-signal = "黄"
+name = "山田"
 
-if signal == "赤":   # 成立しません
-    print("止まります")
-elif signal == "黄": # 成立します
-    print("注意して進みます") # 表示されます
-else:
-    print("進みます")
+print("こんにちは")
+if name == "山田":
+    print("いつも元気ですね")
+    print("山田さん")
+print("よろしくお願いします")
