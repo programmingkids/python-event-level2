@@ -39,4 +39,3 @@ block = [box_a, box_b, box_c, box_d]
 root.after(SPEED, move)
 # メインの画面を表示します
 root.mainloop()
-
