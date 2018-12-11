@@ -1,10 +1,12 @@
-score = 90
+score = 70
 
-if score <= 100 and score >= 90:
-    print("成績はAです")
-elif score <= 89 and score >= 80:
-    print("成績はBです")
-elif score <= 79 and score >= 70:
-    print("成績はCです")
+if score == 100:
+    print("満点です")
+elif score >= 90:
+    print("よく頑張りました")
+elif score >= 80:
+    print("よくできました")
+elif score >= 70:
+    print("あと少し")
 else:
-    print("成績はDです")
+    print("もっと頑張ろう")

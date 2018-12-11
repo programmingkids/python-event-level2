@@ -16,13 +16,14 @@ class Block:
         self.canvas = canvas
 
         for point in self.block[1:]:
+            color = choice(COLORS)
             # ボックスを最初の位置に表示します
             box = canvas.create_rectangle(
                 point[0] * BOX_SIZE + self.start_point_x,
                 point[1] * BOX_SIZE,
                 point[0] * BOX_SIZE + BOX_SIZE + self.start_point_x,
                 point[1] * BOX_SIZE + BOX_SIZE,
-                fill=self.color)
+                fill=color)
             # 表示したボックスをリストに格納します
             self.boxes.append(box)
 
@@ -73,6 +74,35 @@ class Block:
             y_diff = box_coords[1] - pivot_coords[1]
             x_move = (- x_diff - y_diff) / BOX_SIZE
             y_move = (x_diff - y_diff) / BOX_SIZE
+            return x_move, y_move
+
+        # ボックスが移動可能かを判定します
+        for box in boxes:
+            x_move, y_move = get_move_coords(box)
+            if not self.can_move_box(box, x_move, y_move):
+                # 移動不可なので、回転しません
+                return False
+
+        # それぞれのボックスを移動させて、回転します
+        for box in boxes:
+            x_move, y_move = get_move_coords(box)
+            self.canvas.move(box, x_move * BOX_SIZE, y_move * BOX_SIZE)
+        return True
+
+    # ブロックを逆時計回りに回転します
+    def rotate_reverse(self):
+        boxes = self.boxes[:]
+        # 回転の軸になるボックスを指定します。ピボットと呼びます
+        pivot = boxes.pop(2)
+
+        def get_move_coords(box):
+            # ピボットのボックスを軸として、回転するべき座標を計算します
+            box_coords = self.canvas.coords(box)
+            pivot_coords = self.canvas.coords(pivot)
+            x_diff = box_coords[0] - pivot_coords[0]
+            y_diff = box_coords[1] - pivot_coords[1]
+            x_move = (- x_diff + y_diff) / BOX_SIZE
+            y_move = (- x_diff - y_diff) / BOX_SIZE
             return x_move, y_move
 
         # ボックスが移動可能かを判定します

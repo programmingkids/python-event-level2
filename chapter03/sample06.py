@@ -1,6 +1,6 @@
 num = 10
 
-if num == 10:
-    print("numは10です")
+if num >= 5:
+    print("5以上です")
 else:
-    print("numは10ではありません")
+    print("5より小さいです")

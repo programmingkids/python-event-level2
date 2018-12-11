@@ -42,6 +42,8 @@ class Game:
             self.current_block.move(0, 1)
         if event.keysym == "Up":
             self.current_block.rotate()
+        if event.keysym == "space":
+            self.current_block.rotate_reverse()
 
     def start(self):
         # タイマー処理を開始します
@@ -122,16 +124,16 @@ class Game:
 
         # 全てのオブジェクトを辞書にします
         # 辞書のキーはオブジェクトID、辞書の値はY座標
-        all_boxes_coords = {}
+        self.all_boxes_coords = {}
         for d in zipped:
-            all_boxes_coords[d[0]] = d[1]
+            self.all_boxes_coords[d[0]] = d[1]
 
         # setに変換して、重複値を除く
         lines_to_check = set(block_boxes_coords)
 
         # 現在処理中のブロックのボックスと同じ行のボックスを取り出す
         boxes_to_check = {}
-        for k, v in all_boxes_coords.items():
+        for k, v in self.all_boxes_coords.items():
             # 現在のボックスと同じ行のボックスを取り出します
             for line in lines_to_check:
                 if v == line:
@@ -146,32 +148,28 @@ class Game:
 
         # 同じ行のボックス数が、「ウィンドウの幅/BOX_SIZE」と同じなら
         # 行がボックスで埋まったことになります
-        complete_lines = []
+        self.complete_lines = []
         for k, v in counter.items():
             if v == (WINDOW_WIDTH / BOX_SIZE):
                 # 1行がそろったので削除対象の行を追加します
-                complete_lines.append(k)
+                self.complete_lines.append(k)
 
         # 削除する行がない場合、ここで処理は終わり、Falseを返します
-        if not complete_lines: return False
+        if not self.complete_lines: return False
 
         # そろっている行のブロックを削除します
+        remove_boxes = []
         for k, v in boxes_to_check.items():
             # 対象のブロックが、削除する行に含まれている
-            if v in complete_lines:
+            if v in self.complete_lines:
                 # 対象のブロックをキャンバスから消します
-                self.canvas.delete(k)
+                #self.canvas.delete(k)
                 # 全てのブロックを保持するリストからも消します
-                del all_boxes_coords[k]
-
-        # 削除した行の分だけ、全体を下に移動させる
-        for (box, coords) in all_boxes_coords.items():
-            for line in complete_lines:
-                # 削除行した行よりも上に位置するかどうかを判定します
-                if coords < line:
-                    # 削除した行よりも上なので、ボックスを下方向に移動
-                    self.canvas.move(box, 0, BOX_SIZE)
-        return len(complete_lines)
+                del self.all_boxes_coords[k]
+                remove_boxes.append(k)
+        # スライドして削除する
+        self.slide_away(remove_boxes)
+        return len(self.complete_lines)
 
     # ゲーム―オーバー処理
     def game_over(self):
@@ -181,3 +179,25 @@ class Game:
         messagebox.showinfo("ゲームオーバー","スコア：%d " % self.score)
         # 画面を閉じる
         self.root.quit()
+
+    def slide_away(self, remove_boxes):
+        for remove_box in remove_boxes:
+            # BOX_SIZE分だけ左に移動
+            self.canvas.move(remove_box,BOX_SIZE * -1, 0)
+            coords = self.canvas.coords(remove_box)
+            if coords[2] < 0:
+                # 画面から消えたら、削除
+                self.canvas.delete(remove_box)
+                remove_boxes.remove(remove_box)
+
+        if remove_boxes:
+            # 削除対象リストにまだボックスが存在する場合、再度呼び出す
+            self.root.after(10, self.slide_away, remove_boxes)
+        else:
+            # すべて削除できたので、削除したボックスより上部を下に移動
+            for (box, coords) in self.all_boxes_coords.items():
+                for line in self.complete_lines:
+                    # 削除行した行よりも上に位置するかどうかを判定します
+                    if coords < line:
+                        # 削除した行よりも上なので、ボックスを下方向に移動
+                        self.canvas.move(box, 0, BOX_SIZE)
