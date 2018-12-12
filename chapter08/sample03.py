@@ -11,9 +11,3 @@ person1.name = "Yamada"
 person1.age = 17
 person1.say_name()
 person1.say_age()
-
-person2 = Person()
-person2.name = "Sato"
-person2.age = 18
-person2.say_name()
-person2.say_age()

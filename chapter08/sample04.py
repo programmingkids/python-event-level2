@@ -1,7 +1,4 @@
 class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
 
     def getName(self):
         print("私の名前は" + self.name)
