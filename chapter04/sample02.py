@@ -14,6 +14,5 @@ root.title("Puzzle")
 canvas = Canvas(root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
 canvas.pack()
 
-canvas.create_rectangle(0,0,BOX_SIZE,BOX_SIZE, fill="red")
 
 root.mainloop()
