@@ -1,4 +1,4 @@
-score = 70
+score =
 
 if score == 100:
     print("満点です")
