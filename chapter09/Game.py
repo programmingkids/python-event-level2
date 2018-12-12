@@ -6,48 +6,6 @@ from chapter09.Setting import *
 
 
 class Game:
-    def __init__(self):
-        # レベル
-        self.level = 1
-        # 点数
-        self.score = 0
-        # 表示速度
-        self.speed = 500
-        # レベルアップのためのカウンタ用変数
-        self.counter = 0
-        self.create_new_game = True
-
-        # メインのフレーム
-        self.root = Tk()
-        self.root.title("Puzzle")
-        label_font = ("System", 10)
-        # レベルとスコアを表示する文字
-        self.status_var = StringVar()
-        self.status_var.set("レベル： 1  スコア： 0")
-        # レベルとスコアを表示するラベル
-        self.status_label = Label(self.root, textvariable=self.status_var, font=label_font)
-        self.status_label.pack()
-        # ブロックを表示するキャンバス
-        self.canvas = Canvas(self.root, width=WINDOW_WIDTH, height=WINDOW_HEIGHT)
-        self.canvas.pack()
-        # キー操作に対応するイベントを登録します
-        self.root.bind("<Key>", self.event_handler)
-
-    def event_handler(self, event):
-        if event.keysym == "Left":
-            self.current_block.move(-1, 0)
-        if event.keysym == "Right":
-            self.current_block.move(1, 0)
-        if event.keysym == "Down":
-            self.current_block.move(0, 1)
-        if event.keysym == "Up":
-            self.current_block.rotate()
-
-    def start(self):
-        # タイマー処理を開始します
-        self.timer()
-        # フレーム表示
-        self.root.mainloop()
 
     def timer(self):
         if self.create_new_game == True:

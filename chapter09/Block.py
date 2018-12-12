@@ -4,60 +4,6 @@ from chapter09.Setting import *
 
 # ブロックの形を表すクラス
 class Block:
-    # コンストラクタでブロックを作成
-    def __init__(self, canvas):
-        self.start_point_x = (( WINDOW_WIDTH/ BOX_SIZE) // 2 - 1) * BOX_SIZE
-
-        # キャンバスに描かれるボックスをリストで保存します
-        self.boxes = []
-        # Shape.SHAPESの中からランダムに取り出す
-        self.block = choice(BLOCKS)
-        self.color = self.block[0]
-        self.canvas = canvas
-
-        for point in self.block[1:]:
-            # ボックスを最初の位置に表示します
-            box = canvas.create_rectangle(
-                point[0] * BOX_SIZE + self.start_point_x,
-                point[1] * BOX_SIZE,
-                point[0] * BOX_SIZE + BOX_SIZE + self.start_point_x,
-                point[1] * BOX_SIZE + BOX_SIZE,
-                fill=self.color)
-            # 表示したボックスをリストに格納します
-            self.boxes.append(box)
-
-    # ブロックを動かす処理
-    def move(self, x, y):
-        # ブロックを動かすことができるのか判定する
-        if not self.can_move_block(x, y):
-            # 移動不可
-            return False
-        else:
-            # 移動可能なので、実際に移動して表示させる
-            for box in self.boxes:
-                # 第1引数は移動対象ボックス、
-                # 第2引数はX方向の移動量、今回は実質0
-                # 第3引数はY方向の移動量、今回はBOX_SIZEだけ移動
-                self.canvas.move(box, x * BOX_SIZE, y * BOX_SIZE)
-            # 移動成功なので、Trueを返します
-            return True
-
-    # ブロックを下に動かす処理
-    def fall(self):
-        # ブロックを動かすことができるのか判定する
-        if not self.can_move_block(0, 1):
-            # 下に移動不可
-            return False
-        else:
-            # 下に移動可能なので、実際に移動して表示させる
-            # 全てのボックスをY方向に移動させる
-            for box in self.boxes:
-                # 第1引数は移動対象ボックス、
-                # 第2引数はX方向の移動量、今回は実質0
-                # 第3引数はY方向の移動量、今回はBOX_SIZEだけ移動
-                self.canvas.move(box, 0 * BOX_SIZE, 1 * BOX_SIZE)
-            # 移動成功なので、Trueを返します
-            return True
 
     # ブロックを時計回りに回転します。今回は逆回転はしない
     def rotate(self):
